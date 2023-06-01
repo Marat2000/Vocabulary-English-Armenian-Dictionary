@@ -65,18 +65,38 @@ main{
     align-items: center;
     padding-bottom: 10px;
 }
-
 .popup{
-	margin: 0px;
-    padding: 4px;
-    list-style: none;
+	
     position: absolute;
     background-color: white;
     border-radius: 6px;
     border: 1px solid black;
     box-shadow: rgba(0,0,0,0.2) 1px 1px 20px;
-    overflow: auto;
     max-height: 60vh;
+    z-index:20;
+}
+
+.popup input{
+	height: 20px;
+	font-size:18px; 
+	margin-left:-30px;
+	padding-left: 30px;
+	outline: none;
+	background-color: transparent;
+	border:none;
+	width: calc(100% - 15px);
+}
+
+.popupOverflow{
+	 max-height: calc(60vh - 40px);
+	 position: relative;
+	 overflow: auto;
+}
+
+.popupList{
+	margin: 0px;
+    padding: 4px;
+    list-style: none;
     z-index:20;
 }
 

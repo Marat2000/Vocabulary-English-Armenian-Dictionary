@@ -88,7 +88,7 @@ const onAnswerClick=(e)=>{
 
   return (<main>
   	<hr style={{width:'100%'}}/>
- <button className='unsortBtn' onClick={()=> setSorting(!sorting)}>{sorting? X():"Ֆիլտրում"}</button>
+ <button className='unsortBtn' onClick={()=> setSorting(!sorting)}>{sorting? X():"Ֆիլտրել"}</button>
 {sorting && <div className="sorting"> 	
  <div className="sortInput">
 <p>Սկսած<i onClick={()=> setFirstPopupOpen(true)}>{firstWord===''?'Ընտրված': deleteTranscription(firstWord)}</i>բառից</p>
