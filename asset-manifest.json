@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/vocabulary/static/css/main.7a7552f4.css",
+    "main.js": "/vocabulary/static/js/main.56cb1995.js",
+    "index.html": "/vocabulary/index.html",
+    "main.7a7552f4.css.map": "/vocabulary/static/css/main.7a7552f4.css.map",
+    "main.56cb1995.js.map": "/vocabulary/static/js/main.56cb1995.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7a7552f4.css",
+    "static/js/main.56cb1995.js"
+  ]
+}
