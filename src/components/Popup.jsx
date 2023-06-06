@@ -1,51 +1,82 @@
-import data from '../data.json'
-import {AiOutlineSearch as Search} from 'react-icons/ai'
+import Search from './Search'
 import React from 'react'
-import {useDebounce} from 'use-debounce-custom-hook'
+import {FixedSizeList as List} from 'react-window'
+import data from '../data.json'
+
 const Popup=({ setFirstWord, setSecondWord, setFirstPopupOpen,setSecondPopupOpen})=>{
+	
+let allWords=new Array(data.length)
+	for (let i = 0 ; i< allWords.length ; i++)
+	{allWords[i]=Object.keys(data[i])[0]}
 
-	const allWords=Object.keys(data)
-	const [search , setSearch] = React.useState('')
-	const listRef=React.useRef(null)
-	const debouncedValue=useDebounce(search , 1000)
-	const onListClick=(e)=>{
-		console.log(listRef.current.scrollTop)
-		if(setFirstWord)
-		{	setFirstWord(e.target.innerText)
-		setFirstPopupOpen(false)
-		}
-		else if(setSecondWord)
-		{setSecondWord(e.target.innerText)
-		setSecondPopupOpen(false)}
+	const inputRef = React.useRef(null)
+	const [search , setSearch] = React.useState( )
+	
+
+const onListClick=(e)=>{
+	if(setFirstWord)
+	{	setFirstWord(e.target.innerText)
+	setFirstPopupOpen(false)
 	}
+	else if(setSecondWord)
+	{setSecondWord(e.target.innerText)
+	setSecondPopupOpen(false)}
+}
 
-	const onInputChange=(e)=>{
-	 setSearch(e.target.value)
-	}
 
-	React.useEffect(()=>{
+
+React.useEffect(() => {
+
+	const searchFaster=(interval)=>{
+		let index=0
 		
-		let searchValue=debouncedValue	
-	document.querySelectorAll('.popupList li').forEach((i)=>i.style.backgroundColor='transparent')
-	for(let i = 0 ; i< allWords.length; i++)	
-	{
-	let word=allWords[i].split(' ').join('').split('')
-	word.length=searchValue.length
-	if(word.join('')==searchValue.split(' ').join('')) 
-	{	document.querySelectorAll('.popupList li')[i].style.backgroundColor='#a4d5ed'
-		listRef.current.scrollTop=21.99*(i-1)
-		break}}
-		setSearch(debouncedValue)
-	},[debouncedValue])
+		for(let  i = index ; i < allWords.length ; i++)
+{let word=allWords[i].toLowerCase().split(/[\s-/]+/).join('').split('')
+word.length = search.length
+word=word.join('')
+	if(search > word )
+	{	interval=interval/2
+		if(index - interval>=0)
+		index-=interval}
+else {
+	if(index+interval <= allWords.length)
+	index+=interval
+	else index = allWords.length}
+if(search.toLowerCase() == word)
+	{	 inputRef.current.style.color = 'initial'
+		document.querySelector('ul div').scrollTop = 21.99 * (i-1)
+		break} else inputRef.current.style.color = 'tomato'
+}
+ 
+	}	
+	
+if(search?.length>0)
+searchFaster(10000)
+}, [search]);
+
+
+const mapping=({index , key , style})=>{
+	return(
+	<li key={key} style={style} className='popupListElement' title={Object.values(data[index])} onClick={onListClick} >
+		{allWords[index] }
+	</li>
+	)
+
+}
+
 
 return(
 	<div className='popup'>
-	<div style={{display:'flex', margin:'5px', alignItems:'center', border:'1px solid #555', borderRadius:'5px'}}>
-	<Search style={{ width:'30px' , height:'30px', color:'#666' }}/>
-	<input value={search} onChange={onInputChange} placeholder='Որոնում • • •'/></div>
-	<div ref={listRef} className= 'popupOverflow'>
+	<Search inputRef={inputRef} search={search} setSearch={setSearch}/>
+	<div className= 'popupOverflow'>
 	<ul  className='popupList' >
-		{allWords.map((e,i)=>{return ( <li key={i} onClick={onListClick} style={{cursor:'pointer',borderBottom:'1px solid black', padding:'2px', height:'21.99px', boxSizing:'border-box' }}>{e}</li> )})}
+	<List
+	width={'auto'}
+	height={ .6*window.innerHeight - 50 }
+	itemCount={allWords.length}
+	itemSize={21.99}
+	>{mapping}
+	</List>
 	</ul>
 	</div>
 	</div>

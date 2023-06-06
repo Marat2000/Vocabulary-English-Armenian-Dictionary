@@ -27,27 +27,32 @@ const deleteTranscription=(text)=>{
 const getQuestion=()=>{
 	setMyAnswer('')
 document.querySelectorAll('.answer').forEach(i=>i.style.backgroundColor='transparent')
+let allWords=new Array(data.length)
+let allQuestions=new Array(data.length)
+	for (let i = 0 ; i< allWords.length ; i++)
+	{allWords[i]=Object.keys(data[i])[0]
+	allQuestions[i]=Object.values(data[i])[0]}
 let index
 let startIndex=0
-let endIndex=Object.keys(data).length
+let endIndex=data.length
 if(firstWord!=='')
-	startIndex= Object.keys(data).indexOf(firstWord)
+	startIndex= allWords.indexOf(firstWord)
 if(secondWord!=='')
-	endIndex= Object.keys(data).indexOf(secondWord)+1
+	endIndex= allWords.indexOf(secondWord)+1
 index=Math.floor(Math.random()* (endIndex-startIndex) )+startIndex
 
-setCorrectAnswer(Object.values(data)[index])
-setQuestion(Object.keys(data)[index])
+setCorrectAnswer(allQuestions[index])
+setQuestion(allWords[index])
 
 let newAnswers=new Array(4).fill(null)
-newAnswers[Math.floor(Math.random()*4)]= Object.values(data)[index]
+newAnswers[Math.floor(Math.random()*4)]= allQuestions[index]
 
 for( let i= 0 ; i<= newAnswers.length; i++)
 {
 	if(newAnswers[i]===null){
-	let incorrectAnswerIndex = Math.floor(Math.random()*Object.keys(data).length)
+	let incorrectAnswerIndex = Math.floor(Math.random()*data.length)
 	if(incorrectAnswerIndex!==index){
-	newAnswers[i]=Object.values(data)[incorrectAnswerIndex]
+	newAnswers[i]=allQuestions[incorrectAnswerIndex]
 	}
 	else i=-1
 
@@ -70,7 +75,7 @@ const onNextClick=()=>{
 	{if(buttonText==='Ստուգել')	
 		{checkAnswer()
 		if( myAnswer.target.innerText.split(' ').join('') == correctAnswer.split(' ').join('') )
-		{delay(1200).then(()=> getQuestion())}
+		{delay(700).then(()=> getQuestion())}
 		else delay(800).then(()=> setButtonText('Հաջորդը ►'))}
 		else if(buttonText==='Հաջորդը ►')
 		{getQuestion(); setButtonText('Ստուգել') }}
@@ -85,14 +90,15 @@ const onAnswerClick=(e)=>{
 
 
 
-
   return (<main>
   	<hr style={{width:'100%'}}/>
  <button className='unsortBtn' onClick={()=> setSorting(!sorting)}>{sorting? X():"Ֆիլտրել"}</button>
 {sorting && <div className="sorting"> 	
  <div className="sortInput">
 <p>Սկսած<i onClick={()=> setFirstPopupOpen(true)}>{firstWord===''?'Ընտրված': deleteTranscription(firstWord)}</i>բառից</p>
-{firstPopupOpen && <div><Popup setFirstPopupOpen={setFirstPopupOpen} setFirstWord={setFirstWord} /> <div onClick={()=>setFirstPopupOpen(false)} className='overlay'></div></div>}
+{firstPopupOpen && <div>
+	<Popup setFirstPopupOpen={setFirstPopupOpen} setFirstWord={setFirstWord} /> 
+	<div onClick={()=>setFirstPopupOpen(false)} className='overlay'></div></div>}
 <p>Մինչև<i onClick={()=> setSecondPopupOpen(true)}>{secondWord===''?'Ընտրված': deleteTranscription(secondWord)}</i>բառը</p>
 {secondPopupOpen && <div><Popup setSecondPopupOpen={setSecondPopupOpen} setSecondWord={setSecondWord}/> <div onClick={()=>setSecondPopupOpen(false)} className='overlay'></div></div>}
 </div>
