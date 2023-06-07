@@ -73,7 +73,7 @@ main{
     border: 1px solid black;
     box-shadow: rgba(0,0,0,0.2) 1px 1px 20px;
     max-height: 60vh;
-    z-index:20;
+    z-index:40;
 }
 
 .popup input{
@@ -97,7 +97,6 @@ main{
 	margin: 0px;
     padding: 4px;
     list-style: none;
-    z-index:40;
 }
 
 .popupListElement{
