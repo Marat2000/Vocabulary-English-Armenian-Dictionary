@@ -1,7 +1,8 @@
 import data from './data.json'
 import React from 'react'
 import Popup from './components/Popup'
-import {GrClose as X} from 'react-icons/gr'
+import {GrClose as X , GrVolume as Speak} from 'react-icons/gr'
+import Speech from 'react-speech'
 
 function App() {
 const [answers, setAnswers]= React.useState([])
@@ -14,7 +15,7 @@ const [sorting, setSorting] = React.useState(false)
 const [firstWord, setFirstWord]=React.useState('')
 const [secondWord, setSecondWord]=React.useState('')
 const [buttonText , setButtonText]= React.useState('Ստուգել')
-
+const [speechText , setSpeechText] = React.useState('')
 const deleteTranscription=(text)=>{
 	let newText=''
 	for(let i=0 ; i<text.length; i++){
@@ -41,8 +42,17 @@ if(secondWord!=='')
 	endIndex= allWords.indexOf(secondWord)+1
 index=Math.floor(Math.random()* (endIndex-startIndex) )+startIndex
 
+let forSpeech = ''
+for( let i=0 ; i <= allWords[index].length; i++){
+	if(allWords[index][i]!= '[')
+		forSpeech+=allWords[index][i]
+	else break
+}
+forSpeech=forSpeech.split(/[\s-/()]+/).join('')
+
 setCorrectAnswer(allQuestions[index])
 setQuestion(allWords[index])
+setSpeechText(forSpeech)
 
 let newAnswers=new Array(4).fill(null)
 newAnswers[Math.floor(Math.random()*4)]= allQuestions[index]
@@ -105,8 +115,13 @@ const onAnswerClick=(e)=>{
  <button className="unsortBtn" onClick={()=>{setFirstWord(''); setSecondWord('')}}>Ամբողջը</button> 
 </div>}
 <hr style={{width:'100%'}}/>
-
+<div style={{display:'flex' ,alignItems:'center', width:'inherit' , justifyContent:'space-between'}}>
 <h1 className='question'>{question}</h1>
+<div className='speech'>
+<Speech  text={speechText} voice="Google UK English Male" />
+<Speak  className='speechIcon'/>
+</div>
+</div>
 {answers.map((e,i)=>{return(<button  key={i} onClick={onAnswerClick } className={`answer answer${i}`}>{e}</button>)})}
 <button  onClick={onNextClick } className='nextBtn'>{buttonText}</button>
 </main>)}

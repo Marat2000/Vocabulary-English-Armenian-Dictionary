@@ -153,6 +153,39 @@ main{
 
 }
 
+.speech{
+	position: relative;
+}
+
+.speech:hover .speechIcon{
+ opacity: .5;
+}
+
+.speech button {
+	width:30px;
+	height: 30px;
+	position: relative;
+	z-index: 20;
+	background-color: transparent !important;
+}
+
+.speech button svg	{
+	width: 0px;
+	height: 0px;
+
+}
+
+.speechIcon{
+	position: absolute;
+    width: 27px;
+    height: 27px;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+
+
 @media(max-width: 620px){
 	.sorting{
 		display: grid;

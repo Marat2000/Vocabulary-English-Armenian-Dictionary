@@ -31,7 +31,7 @@ React.useEffect(() => {
 		let index=0
 		
 		for(let  i = index ; i < allWords.length ; i++)
-{let word=allWords[i].toLowerCase().split(/[\s-/]+/).join('').split('')
+{let word=allWords[i].toLowerCase().split(/[\s-/()]+/).join('').split('')
 word.length = search.length
 word=word.join('')
 	if(search > word )
