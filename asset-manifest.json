@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Vocabulary-English-Armenian-Dictionary/static/css/main.b6b87967.css",
+    "main.css": "/Vocabulary-English-Armenian-Dictionary/static/css/main.e056c7d5.css",
     "main.js": "/Vocabulary-English-Armenian-Dictionary/static/js/main.4f360b8f.js",
     "index.html": "/Vocabulary-English-Armenian-Dictionary/index.html",
-    "main.b6b87967.css.map": "/Vocabulary-English-Armenian-Dictionary/static/css/main.b6b87967.css.map",
+    "main.e056c7d5.css.map": "/Vocabulary-English-Armenian-Dictionary/static/css/main.e056c7d5.css.map",
     "main.4f360b8f.js.map": "/Vocabulary-English-Armenian-Dictionary/static/js/main.4f360b8f.js.map"
   },
   "entrypoints": [
-    "static/css/main.b6b87967.css",
+    "static/css/main.e056c7d5.css",
     "static/js/main.4f360b8f.js"
   ]
 }
