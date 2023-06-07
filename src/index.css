@@ -97,7 +97,7 @@ main{
 	margin: 0px;
     padding: 4px;
     list-style: none;
-    z-index:20;
+    z-index:40;
 }
 
 .popupListElement{
@@ -145,7 +145,7 @@ main{
 	background-color: blue;
 	opacity: 0.2;
 	position: fixed;
-	z-index: 10;
+	z-index: 30;
 	top:0;
 	left:0;
 	min-height: 100vh;
