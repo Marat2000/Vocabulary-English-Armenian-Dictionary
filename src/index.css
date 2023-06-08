@@ -152,35 +152,29 @@ main{
 
 }
 
-.speech{
-	position: relative;
-}
-
-.speech:hover .speechIcon{
- opacity: .5;
-}
-
-.speech button {
-	width:30px;
+.speechBtn{
+	width: 30px;
 	height: 30px;
-	position: relative;
-	z-index: 20;
-	background-color: transparent !important;
+	display: grid;
+	place-items:center;
+	cursor: pointer;
+	background-color: transparent;
+    border:black 2px solid; 
+    border-radius: 3px;
+     position: relative;
+    z-index: 10;
+
 }
 
-.speech button svg	{
-	width: 0px;
-	height: 0px;
-
+.speechBtn:hover{
+	opacity: .5;
+	transition: .2s;
 }
 
 .speechIcon{
-	position: absolute;
-    width: 27px;
-    height: 27px;
-    top: 0;
-    left: 0;
-    z-index: 10;
+    width: 18px;
+    height: 20px;
+   
 }
 
 

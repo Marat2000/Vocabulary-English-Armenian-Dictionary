@@ -2,9 +2,12 @@ import data from './data.json'
 import React from 'react'
 import Popup from './components/Popup'
 import {GrClose as X , GrVolume as Speak} from 'react-icons/gr'
-import Speech from 'react-speech'
+import * as meSpeak from 'mespeak'
 
 function App() {
+
+
+
 const [answers, setAnswers]= React.useState([])
 const [question, setQuestion] = React.useState("")
 const [correctAnswer, setCorrectAnswer] = React.useState("")
@@ -16,14 +19,32 @@ const [firstWord, setFirstWord]=React.useState('')
 const [secondWord, setSecondWord]=React.useState('')
 const [buttonText , setButtonText]= React.useState('Ստուգել')
 const [speechText , setSpeechText] = React.useState('')
-const deleteTranscription=(text)=>{
-	let newText=''
-	for(let i=0 ; i<text.length; i++){
-		if(text[i]!='[')
-			newText+=text[i]
-		else return newText
+
+
+meSpeak.loadVoice(require("mespeak/voices/en/en.json"))
+!meSpeak.isConfigLoaded() && meSpeak.loadConfig(require("mespeak/src/mespeak_config.json"))
+
+
+const deleteTranscription = (text) => {
+	let newText = "";
+	for (let i = 0; i < text.length; i++) {
+		if (text[i] != "[") newText += text[i];
+		else return newText;
 	}
+};
+
+const deleteRomanNum = (text) => {
+	if(text.slice(text.length-3,text.length)===" I ")
+	{text=text.replace(" I ", ""); console.log(1)}
+else if(text.slice(text.length-4,text.length)===" II ")
+	{text=text.replace(" II ", ""); console.log(2)}
+else if(text.slice(text.length-5,text.length)===" III ")
+	{text=text.replace(" III ", ""); console.log(3)}
+else if(text.slice(text.length-4,text.length)===" IV ")
+	{text=text.replace(" IV ", ""); console.log(4)}
+return text
 }
+
 
 const getQuestion=()=>{
 	setMyAnswer('')
@@ -42,12 +63,8 @@ if(secondWord!=='')
 	endIndex= allWords.indexOf(secondWord)+1
 index=Math.floor(Math.random()* (endIndex-startIndex) )+startIndex
 
-let forSpeech = ''
-for( let i=0 ; i <= allWords[index].length; i++){
-	if(allWords[index][i]!= '[')
-		forSpeech+=allWords[index][i]
-	else break
-}
+let forSpeech =deleteTranscription(allWords[index])
+forSpeech = deleteRomanNum(forSpeech)
 forSpeech=forSpeech.split(/[\s-/()]+/).join('')
 
 setCorrectAnswer(allQuestions[index])
@@ -61,7 +78,7 @@ for( let i= 0 ; i<= newAnswers.length; i++)
 {
 	if(newAnswers[i]===null){
 	let incorrectAnswerIndex = Math.floor(Math.random()*data.length)
-	if(incorrectAnswerIndex!==index){
+	if(incorrectAnswerIndex!==index &&  deleteRomanNum(allQuestions[incorrectAnswerIndex])!=deleteRomanNum(allQuestions[index]) ){
 	newAnswers[i]=allQuestions[incorrectAnswerIndex]
 	}
 	else i=-1
@@ -117,13 +134,18 @@ const onAnswerClick=(e)=>{
 <hr style={{width:'100%'}}/>
 <div style={{display:'flex' ,alignItems:'center', width:'inherit' , justifyContent:'space-between'}}>
 <h1 className='question'>{question}</h1>
-<div className='speech'>
-<Speech  text={speechText} voice="Google UK English Male" />
+
+
+<button className='speechBtn' onClick={()=>{ meSpeak.canPlay() && meSpeak.speak(speechText,{variant:'m7' , pitch:25, amplitude:10, speed:130 , volume:1 , wordgap:0  })}} >
 <Speak  className='speechIcon'/>
-</div>
+</button>
+
+
 </div>
 {answers.map((e,i)=>{return(<button  key={i} onClick={onAnswerClick } className={`answer answer${i}`}>{e}</button>)})}
-<button  onClick={onNextClick } className='nextBtn'>{buttonText}</button>
+<button  onClick={  onNextClick } className='nextBtn'>{buttonText}</button>
+   <script src=""></script>
+
 </main>)}
 
 
