@@ -136,7 +136,7 @@ const onAnswerClick=(e)=>{
 <h1 className='question'>{question}</h1>
 
 
-<button className='speechBtn' onClick={()=>{ meSpeak.canPlay() && meSpeak.speak(speechText,{variant:'m7' , pitch:25, amplitude:10, speed:130 , volume:1 , wordgap:0  })}} >
+<button className='speechBtn' onClick={()=>{ meSpeak.canPlay() && meSpeak.speak(speechText,{variant:'m7' , pitch:25, amplitude:120, speed:130 , volume:1 , wordgap:0  })}} >
 <Speak  className='speechIcon'/>
 </button>
 
