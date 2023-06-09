@@ -16,7 +16,7 @@ const Search = ({inputRef , search , setSearch}) =>{
 
 
 React.useEffect(()=>{
-setSearch(inputValue.split(/[\s-/]+/).join(''))
+setSearch(inputValue.split(/[\s-/()]+/).join(''))
 } , [debouncedValue])
 
 

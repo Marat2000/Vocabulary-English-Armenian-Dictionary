@@ -152,7 +152,16 @@ main{
 
 }
 
-.speechBtn{
+.speech *{
+	width:30px ;
+	height:30px;
+	position: absolute;
+	box-sizing: border-box;
+	background-color: transparent !important;
+	border: none !important;
+}
+
+ .speech  {
 	width: 30px;
 	height: 30px;
 	display: grid;
@@ -163,19 +172,67 @@ main{
     border-radius: 3px;
      position: relative;
     z-index: 10;
+    
 
 }
 
-.speechBtn:hover{
+.speech button{
+	position: relative;
+	z-index: 20;
+}
+
+.speech:hover {
 	opacity: .5;
 	transition: .2s;
 }
 
-.speechIcon{
+.speechIcon {
     width: 18px;
     height: 20px;
+    z-index:10;
+    position: relative;
    
 }
+
+.voicesPopup{
+	padding: 5px;
+    position: absolute;
+    background-color: white;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 0;
+    list-style: none;
+    width: inherit;
+    z-index:40;
+    box-shadow: black 0px 7px 20px;
+}
+
+.voicesPopupElement{
+	border-bottom: 1px solid black;
+    margin-bottom: 1px;
+    cursor: pointer;
+}
+
+.voicesPopupElement:hover{
+	border-bottom: 1px solid black;
+    margin-bottom: 1px;
+    background-color: #a4d5ed;
+}
+
+
+.speech{
+	position: relative;
+}
+
+.speech button svg
+	{
+	width: 0px;
+	height: 0px;
+
+}
+
+
 
 
 

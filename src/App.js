@@ -33,7 +33,7 @@ const delay=(ms)=>{return(new Promise(resolve=> setTimeout(()=>resolve(), ms)))}
 React.useEffect(()=>{
 
 delay(2000).then(()=>	
-	 { 	let array = speechSynthesis.getVoices()
+	 { 	let array = window.speechSynthesis.getVoices()
 	 	array.push({name:'meSpeak default voice', voiceURI:'meSpeak default voice'})
 	 	setLanguagesArray ([...array])
 	 	let currentLanguage = array[0].voiceURI
