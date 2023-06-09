@@ -1,8 +1,11 @@
 import data from './data.json'
 import React from 'react'
 import Popup from './components/Popup'
-import {GrClose as X , GrVolume as Speak} from 'react-icons/gr'
+import Voices from './components/Voices'
+import {GrClose as X , GrVolume as Speak , GrDown as Arrow} from 'react-icons/gr'
 import * as meSpeak from 'mespeak'
+import Speech from 'react-speech'
+
 
 function App() {
 
@@ -19,6 +22,28 @@ const [firstWord, setFirstWord]=React.useState('')
 const [secondWord, setSecondWord]=React.useState('')
 const [buttonText , setButtonText]= React.useState('Ստուգել')
 const [speechText , setSpeechText] = React.useState('')
+const [languagesOpen , setLanguagesOpen] = React.useState(false)
+const [language , setLanguage] = React.useState('')
+const [languagesArray , setLanguagesArray] = React.useState([])
+
+
+const delay=(ms)=>{return(new Promise(resolve=> setTimeout(()=>resolve(), ms)))}
+
+
+React.useEffect(()=>{
+
+delay(2000).then(()=>	
+	 { 	let array = speechSynthesis.getVoices()
+	 	array.push({name:'meSpeak default voice', voiceURI:'meSpeak default voice'})
+	 	setLanguagesArray ([...array])
+	 	let currentLanguage = array[0].voiceURI
+				array.forEach((e,i)=>{
+				if(e.lang=='en-UK' || e.lang=='en-GB')
+				currentLanguage=array[i].voiceURI
+				setLanguage(currentLanguage)})
+	 })
+},[])
+
 
 
 meSpeak.loadVoice(require("mespeak/voices/en/en.json"))
@@ -32,6 +57,8 @@ const deleteTranscription = (text) => {
 		else return newText;
 	}
 };
+
+
 
 const deleteRomanNum = (text) => {
 	if(text.slice(text.length-3,text.length)===" I ")
@@ -95,7 +122,6 @@ const checkAnswer=()=>{
 	document.querySelector(`.answer${answers.indexOf( correctAnswer)}`).style.backgroundColor='#bdff96'
 }
 
-const delay=(ms)=>{return(new Promise(resolve=> setTimeout(()=>resolve(), ms)))}
 const onNextClick=()=>{
 
 	if(myAnswer.target)
@@ -115,7 +141,14 @@ const onAnswerClick=(e)=>{
 	e.target.style.backgroundColor='#a4d5ed'
 }
 
+const onSpeechClick=()=>{
 
+	if(language=='meSpeak default voice')
+	meSpeak.speak(speechText,{variant:'m7' , pitch:30, amplitude:500, speed:130 , volume:1 , wordgap:0})
+	
+}
+	
+		
 
   return (<main>
   	<hr style={{width:'100%'}}/>
@@ -132,16 +165,24 @@ const onAnswerClick=(e)=>{
  <button className="unsortBtn" onClick={()=>{setFirstWord(''); setSecondWord('')}}>Ամբողջը</button> 
 </div>}
 <hr style={{width:'100%'}}/>
+<fieldset style={{fontSize:'12px',border:'1px solid black' , borderRadius:'3px',cursor:'pointer'}} onClick={()=> setLanguagesOpen(!languagesOpen)}>
+<legend > Ձայներ </legend>
+{language}
+<Arrow style={{   marginRight:'5px', display: 'inline', float: 'right',  rotate:`${ languagesOpen ?'180deg': '0deg' }` , transition:'.2s'}}/>
+</fieldset>
+<div style={{positin:'relative' , width:'inherit'}}>
+{ languagesOpen && <Voices array={languagesArray} setLanguage={setLanguage} setLanguagesOpen={setLanguagesOpen}/>}	
+</div>
+
 <div style={{display:'flex' ,alignItems:'center', width:'inherit' , justifyContent:'space-between'}}>
 <h1 className='question'>{question}</h1>
 
-
-<button className='speechBtn' onClick={()=>{ meSpeak.canPlay() && meSpeak.speak(speechText,{variant:'m7' , pitch:25, amplitude:10, speed:130 , volume:1 , wordgap:0  })}} >
+<div className='speech' onClick={onSpeechClick}>
+{language!='meSpeak default voice' &&<Speech  text={speechText} voice={language} />}
 <Speak  className='speechIcon'/>
-</button>
-
-
 </div>
+</div>
+
 {answers.map((e,i)=>{return(<button  key={i} onClick={onAnswerClick } className={`answer answer${i}`}>{e}</button>)})}
 <button  onClick={  onNextClick } className='nextBtn'>{buttonText}</button>
    <script src=""></script>
