@@ -60,6 +60,7 @@ delay(2000).then(()=>
 				if(e.lang=='en-UK' || e.lang=='en-GB')
 				currentLanguage=array[i].voiceURI
 				setLanguage(currentLanguage)})
+				console.log(array)
 	 })
 }
 
