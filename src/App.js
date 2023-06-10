@@ -198,7 +198,7 @@ const onSpeechClick=()=>{
 <h1 className='question'>{question}</h1>
 
 <div className='speech' onClick={onSpeechClick}>
-{language!='meSpeak default voice' &&<Speech  text={speechText} voice={'Google русский'} />}
+{language!='meSpeak default voice' &&<Speech  text={speechText} voice={languages} />}
 <Speak  className='speechIcon'/>
 </div>
 </div>
