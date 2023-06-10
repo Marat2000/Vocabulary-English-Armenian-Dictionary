@@ -54,6 +54,7 @@ const getAllVoices=()=>{
 delay(2000).then(()=>	
 	 { 	let array = window.speechSynthesis.getVoices()
 	 	array.push({name:'meSpeak default voice', voiceURI:'meSpeak default voice'})
+
 	 	setLanguagesArray ([...array])
 	 	let currentLanguage = array[0].voiceURI
 				array.forEach((e,i)=>{
@@ -198,7 +199,7 @@ const onSpeechClick=()=>{
 <h1 className='question'>{question}</h1>
 
 <div className='speech' onClick={onSpeechClick}>
-{language!='meSpeak default voice' &&<Speech  text={speechText} voice={'Google русский'} />}
+{language!='meSpeak default voice' &&<Speech  text={speechText} voice={language} />}
 <Speak  className='speechIcon'/>
 </div>
 </div>
