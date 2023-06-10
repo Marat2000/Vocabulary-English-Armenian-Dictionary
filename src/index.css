@@ -113,6 +113,8 @@ main{
 	width: 50%;
 	display: grid;
 	font-size:12px; 
+	animation-name: panelVisibility;
+	animation-duration: .3s;
 }
 
 .sortinput p {
@@ -194,33 +196,6 @@ main{
    
 }
 
-.voicesPopup{
-	padding: 5px;
-    position: absolute;
-    background-color: white;
-    box-sizing: border-box;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin: 0;
-    list-style: none;
-    width: inherit;
-    z-index:40;
-    box-shadow: black 0px 7px 20px;
-    max-height:60vh;
-    overflow: auto;
-}
-
-.voicesPopupElement{
-	border-bottom: 1px solid black;
-    margin-bottom: 1px;
-    cursor: pointer;
-}
-
-.voicesPopupElement:hover{
-	border-bottom: 1px solid black;
-    margin-bottom: 1px;
-    background-color: #a4d5ed;
-}
 
 
 .speech{
@@ -254,6 +229,16 @@ main{
     box-sizing: border-box;
 }
 
+
+@keyframes panelVisibility{
+	from{opacity:0; font-size:0px;}
+	to{opacity:1; font-size:12px;}
+}
+
+.voiceChangePanel {
+	animation-name: panelVisibility;
+	animation-duration: .3s;
+}
 
 @media(max-width: 620px){
 	.sorting{

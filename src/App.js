@@ -3,6 +3,7 @@ import React from 'react'
 import Popup from './components/Popup'
 import Toggle from './components/Toggle'
 import {GrClose as X , GrVolume as Speak , GrDown as Arrow} from 'react-icons/gr'
+import {FaCog as Gear} from 'react-icons/fa'
 import * as meSpeak from 'mespeak'
 import Speech from 'react-speech'
 
@@ -26,6 +27,7 @@ const [languagesOpen , setLanguagesOpen] = React.useState(false)
 const [language , setLanguage] = React.useState('')
 const [languagesArray , setLanguagesArray] = React.useState([])
 const [toggleOn , setToggleOn] = React.useState(false)
+const [gearClicked , setGearClicked ] = React.useState(false)
 
 
 const delay=(ms)=>{return(new Promise(resolve=> setTimeout(()=>resolve(), ms)))}
@@ -33,9 +35,7 @@ const delay=(ms)=>{return(new Promise(resolve=> setTimeout(()=>resolve(), ms)))}
 
 const getAllVoices=()=>{
 
-
-delay(2000).then(()=>	
-	 { 	let array = window.speechSynthesis.getVoices()
+	 	let array = window.speechSynthesis.getVoices()
 	 	array.push({name:'meSpeak default voice', voiceURI:'meSpeak default voice' , lang:'default'})
 
 	 	let currentLanguage = array[0].voiceURI
@@ -57,17 +57,21 @@ delay(2000).then(()=>
 	 			 	}}	
 setLanguage(currentLanguage)
 setLanguagesArray ([...array])
-	 })
 }
  
 
 React.useEffect(()=>{
-		getAllVoices()
-		getAllVoices()
-		getAllVoices()
-		getAllVoices()
-		getAllVoices()
-		getAllVoices()
+		
+	delay(2000).then(getAllVoices)
+	.then(()=>{delay(2000).then(getAllVoices) 
+		.then(()=>{delay(2000).then(getAllVoices) 
+		.then(()=>{delay(2000).then(getAllVoices)  
+		.then(()=>{delay(2000).then(getAllVoices)  
+		.then(()=>{delay(2000).then(getAllVoices)  
+		.then(()=>{delay(2000).then(getAllVoices)  
+		})})})})})})
+		
+		
 },[])
 
 
@@ -190,12 +194,14 @@ const onSpeechClick=()=>{
  <button className="unsortBtn" onClick={()=>{setFirstWord(''); setSecondWord('')}}>Ամբողջը</button> 
 </div>}
 <hr style={{width:'100%'}}/>
-
+<Gear onClick={()=>setGearClicked(!gearClicked)} style={{ width:'20px' , height:'20px', cursor:'pointer', rotate:`${gearClicked?'90deg':'0deg'}` , transition:'.3s'}}/>
+{ gearClicked &&
+ <div className='voiceChangePanel'>
 <p style={{fontSize:'12px', margin:'0'}}><span style={{fontWeight:'bold'}}> Ընտրված ձայնը: </span> {toggleOn?'Հիմնական ձայնը' : language} </p>
- <div style={{display:'flex' , alignItems:'center' , marginLeft:'auto'}}>
+ <div style={{display:'flex' , alignItems:'center' ,float:'right', marginBottom:'5px' }}>
  <p style={{fontSize:'12px', fontWeight:'bold', margin:'0'}}>փոխել ձայնը</p> <Toggle setToggleOn={setToggleOn} toggleOn={toggleOn}/></div>
-<hr style={{width:'100%'}}/>
-
+<hr style={{width:'100%'}}/></div>
+}
 
 <div style={{display:'flex' ,alignItems:'center', width:'inherit' , justifyContent:'space-between'}}>
 <h1 className='question'>{question}</h1>
