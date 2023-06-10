@@ -197,7 +197,7 @@ const onSpeechClick=()=>{
 <Speak  className='speechIcon'/>
 </div>
 </div>
-
+{ languagesArray.map(e=> {return (<div>{e.lang}</div>)}) }
 {answers.map((e,i)=>{return(<button  key={i} onClick={onAnswerClick } className={`answer answer${i}`}>{e}</button>)})}
 <button  onClick={  onNextClick } className='nextBtn'>{buttonText}</button>
    <script src=""></script>
