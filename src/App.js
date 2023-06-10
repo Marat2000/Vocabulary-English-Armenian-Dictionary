@@ -30,19 +30,19 @@ const [languagesArray , setLanguagesArray] = React.useState([])
 const delay=(ms)=>{return(new Promise(resolve=> setTimeout(()=>resolve(), ms)))}
 
 
-React.useEffect(()=>{
+// React.useEffect(()=>{
 
-delay(10000).then(()=>	
-	 { 	let array = window.speechSynthesis.getVoices()
-	 	array.push({name:'meSpeak default voice', voiceURI:'meSpeak default voice'})
-	 	setLanguagesArray ([...array])
-	 	let currentLanguage = array[0].voiceURI
-				array.forEach((e,i)=>{
-				if(e.lang=='en-UK' || e.lang=='en-GB')
-				currentLanguage=array[i].voiceURI
-				setLanguage(currentLanguage)})
-	 })
-},[])
+// delay(10000).then(()=>	
+// 	 { 	let array = window.speechSynthesis.getVoices()
+// 	 	array.push({name:'meSpeak default voice', voiceURI:'meSpeak default voice'})
+// 	 	setLanguagesArray ([...array])
+// 	 	let currentLanguage = array[0].voiceURI
+// 				array.forEach((e,i)=>{
+// 				if(e.lang=='en-UK' || e.lang=='en-GB')
+// 				currentLanguage=array[i].voiceURI
+// 				setLanguage(currentLanguage)})
+// 	 })
+// },[])
 
 
 
