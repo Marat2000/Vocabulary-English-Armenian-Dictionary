@@ -58,7 +58,7 @@ delay(2000).then(()=>
 	 	setLanguagesArray ([...array])
 	 	let currentLanguage = array[0].voiceURI
 				array.forEach((e,i)=>{
-				if(e.lang=='en-UK' || e.lang=='en-GB')
+				if(e.lang=='en-UK' || e.lang=='en-GB' || e.lang=='en_UK' || e.lang=='en_GB')
 				currentLanguage=array[i].voiceURI
 				setLanguage(currentLanguage)})
 				console.log(array)
