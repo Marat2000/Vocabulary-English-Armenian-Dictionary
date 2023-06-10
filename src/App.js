@@ -45,6 +45,9 @@ delay(10000).then(()=>
 },[])
 
 
+
+
+
 const getAllVoices=()=>{
 
 
@@ -189,6 +192,7 @@ const onSpeechClick=()=>{
 { languagesOpen && <Voices array={languagesArray} setLanguage={setLanguage} setLanguagesOpen={setLanguagesOpen}/>}	
 </div>
 
+<button> getVoices</button>
 <div style={{display:'flex' ,alignItems:'center', width:'inherit' , justifyContent:'space-between'}}>
 <h1 className='question'>{question}</h1>
 
