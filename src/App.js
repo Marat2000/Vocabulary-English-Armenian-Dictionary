@@ -30,7 +30,23 @@ const [languagesArray , setLanguagesArray] = React.useState([])
 const delay=(ms)=>{return(new Promise(resolve=> setTimeout(()=>resolve(), ms)))}
 
 
-React.useEffect(()=>{
+// React.useEffect(()=>{
+
+// delay(2000).then(()=>	
+// 	 { 	let array = window.speechSynthesis.getVoices()
+// 	 	array.push({name:'meSpeak default voice', voiceURI:'meSpeak default voice'})
+// 	 	setLanguagesArray ([...array])
+// 	 	let currentLanguage = array[0].voiceURI
+// 				array.forEach((e,i)=>{
+// 				if(e.lang=='en-UK' || e.lang=='en-GB')
+// 				currentLanguage=array[i].voiceURI
+// 				setLanguage(currentLanguage)})
+// 	 })
+// },[])
+
+
+const getAllVoices=()=>{
+
 
 delay(2000).then(()=>	
 	 { 	let array = window.speechSynthesis.getVoices()
@@ -42,8 +58,7 @@ delay(2000).then(()=>
 				currentLanguage=array[i].voiceURI
 				setLanguage(currentLanguage)})
 	 })
-},[])
-
+}
 
 
 meSpeak.loadVoice(require("mespeak/voices/en/en.json"))
@@ -173,7 +188,7 @@ const onSpeechClick=()=>{
 <div style={{positin:'relative' , width:'inherit'}}>
 { languagesOpen && <Voices array={languagesArray} setLanguage={setLanguage} setLanguagesOpen={setLanguagesOpen}/>}	
 </div>
-
+<button onClick={getAllVoices}> asdasd </button>
 <div style={{display:'flex' ,alignItems:'center', width:'inherit' , justifyContent:'space-between'}}>
 <h1 className='question'>{question}</h1>
 
