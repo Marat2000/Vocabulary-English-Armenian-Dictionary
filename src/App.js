@@ -192,7 +192,7 @@ const onSpeechClick=()=>{
 { languagesOpen && <Voices array={languagesArray} setLanguage={setLanguage} setLanguagesOpen={setLanguagesOpen}/>}	
 </div>
 
-<button> getVoices</button>
+<button onClick={getAllVoices}> getVoices</button>
 <div style={{display:'flex' ,alignItems:'center', width:'inherit' , justifyContent:'space-between'}}>
 <h1 className='question'>{question}</h1>
 
