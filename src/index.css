@@ -22,6 +22,8 @@ main{
 .question{
 	word-wrap: break-word;
 	width: 60vw;
+	margin: 0;
+    margin-bottom: 20px;
 }
 
 .answer{

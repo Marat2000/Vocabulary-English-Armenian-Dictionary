@@ -194,7 +194,9 @@ const onSpeechClick=()=>{
  <button className="unsortBtn" onClick={()=>{setFirstWord(''); setSecondWord('')}}>Ամբողջը</button> 
 </div>}
 <hr style={{width:'100%'}}/>
-<Gear onClick={()=>setGearClicked(!gearClicked)} style={{ width:'20px' , height:'20px', cursor:'pointer', rotate:`${gearClicked?'90deg':'0deg'}` , transition:'.3s'}}/>
+<div onClick={()=>setGearClicked(!gearClicked)} style={{ cursor:'pointer',width:'40px', height:'40px' , display:'grid' , placeItems:'center' }}>
+<Gear  style={{ width:'25px' , height:'25px',  rotate:`${gearClicked?'90deg':'0deg'}` , transition:'.3s'}}/>
+</div>
 { gearClicked &&
  <div className='voiceChangePanel'>
 <p style={{fontSize:'12px', margin:'0'}}><span style={{fontWeight:'bold'}}> Ընտրված ձայնը: </span> {toggleOn?'Հիմնական ձայնը' : language} </p>
