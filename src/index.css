@@ -206,6 +206,8 @@ main{
     width: inherit;
     z-index:40;
     box-shadow: black 0px 7px 20px;
+    max-height:60vh;
+    overflow: auto;
 }
 
 .voicesPopupElement{
