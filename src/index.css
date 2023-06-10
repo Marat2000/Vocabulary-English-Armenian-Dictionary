@@ -234,8 +234,25 @@ main{
 
 }
 
+.toggle{
+    width: 45px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid black;
+    cursor:pointer;
+}
 
-
+.toggleCircle{
+	background-color: #555;
+    width: 15px;
+    height: 15px;
+    margin: 2.5px;
+    border-radius: 50%;
+    padding: 1px;
+    transition: .2s;
+    box-sizing: border-box;
+}
 
 
 @media(max-width: 620px){

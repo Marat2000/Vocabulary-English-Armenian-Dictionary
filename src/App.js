@@ -1,7 +1,7 @@
 import data from './data.json'
 import React from 'react'
 import Popup from './components/Popup'
-import Voices from './components/Voices'
+import Toggle from './components/Toggle'
 import {GrClose as X , GrVolume as Speak , GrDown as Arrow} from 'react-icons/gr'
 import * as meSpeak from 'mespeak'
 import Speech from 'react-speech'
@@ -25,27 +25,10 @@ const [speechText , setSpeechText] = React.useState('')
 const [languagesOpen , setLanguagesOpen] = React.useState(false)
 const [language , setLanguage] = React.useState('')
 const [languagesArray , setLanguagesArray] = React.useState([])
+const [toggleOn , setToggleOn] = React.useState(false)
 
 
 const delay=(ms)=>{return(new Promise(resolve=> setTimeout(()=>resolve(), ms)))}
-
-
-// React.useEffect(()=>{
-
-// delay(10000).then(()=>	
-// 	 { 	let array = window.speechSynthesis.getVoices()
-// 	 	array.push({name:'meSpeak default voice', voiceURI:'meSpeak default voice'})
-// 	 	setLanguagesArray ([...array])
-// 	 	let currentLanguage = array[0].voiceURI
-// 				array.forEach((e,i)=>{
-// 				if(e.lang=='en-UK' || e.lang=='en-GB')
-// 				currentLanguage=array[i].voiceURI
-// 				setLanguage(currentLanguage)})
-// 	 })
-// },[])
-
-
-
 
 
 const getAllVoices=()=>{
@@ -53,17 +36,39 @@ const getAllVoices=()=>{
 
 delay(2000).then(()=>	
 	 { 	let array = window.speechSynthesis.getVoices()
-	 	array.push({name:'meSpeak default voice', voiceURI:'meSpeak default voice'})
+	 	array.push({name:'meSpeak default voice', voiceURI:'meSpeak default voice' , lang:'default'})
 
-	 	setLanguagesArray ([...array])
 	 	let currentLanguage = array[0].voiceURI
-				array.forEach((e,i)=>{
-				if(e.lang=='en-UK' || e.lang=='en-GB' || e.lang=='en_UK' || e.lang=='en_GB')
-				currentLanguage=array[i].voiceURI
-				setLanguage(currentLanguage)})
-				console.log(array)
+	 	if(array.length>1)
+	 	{let arrayofLanguages=[]
+	 			 	array.forEach((e)=>{ arrayofLanguages.push(e.lang) })
+	 			 	let supportedLanguages =['en-UK','en-GB','en_UK','en_GB','en-US','en_US']
+	 			 	for(let i=0 ; i< supportedLanguages.length ; i++){
+	 			 	if( arrayofLanguages.includes( supportedLanguages[i] ))
+	 			 	{
+	 					currentLanguage = array[ arrayofLanguages.indexOf(supportedLanguages[i])].voiceURI
+	 					break
+	 			 	}else if(i= supportedLanguages.length){
+	 			 		 arrayofLanguages.forEach((e,i)=>{if( e.includes('en-') || e.includes('en_')) currentLanguage = array[i].voiceURI})
+	 			 	}
+	 		
+	 			 	
+	 		
+	 			 	}}	
+setLanguage(currentLanguage)
+setLanguagesArray ([...array])
 	 })
 }
+ 
+
+React.useEffect(()=>{
+		getAllVoices()
+		getAllVoices()
+		getAllVoices()
+		getAllVoices()
+		getAllVoices()
+		getAllVoices()
+},[])
 
 
 meSpeak.loadVoice(require("mespeak/voices/en/en.json"))
@@ -163,7 +168,7 @@ const onAnswerClick=(e)=>{
 
 const onSpeechClick=()=>{
 
-	if(language=='meSpeak default voice')
+	if(toggleOn)
 	meSpeak.speak(speechText,{variant:'m7' , pitch:30, amplitude:500, speed:130 , volume:1 , wordgap:0})
 	
 }
@@ -185,25 +190,21 @@ const onSpeechClick=()=>{
  <button className="unsortBtn" onClick={()=>{setFirstWord(''); setSecondWord('')}}>Ամբողջը</button> 
 </div>}
 <hr style={{width:'100%'}}/>
-<fieldset style={{fontSize:'12px',border:'1px solid black' , borderRadius:'3px',cursor:'pointer'}} onClick={()=> setLanguagesOpen(!languagesOpen)}>
-<legend > Ձայներ </legend>
-{language}
-<Arrow style={{   marginRight:'5px', display: 'inline', float: 'right',  rotate:`${ languagesOpen ?'180deg': '0deg' }` , transition:'.2s'}}/>
-</fieldset>
-<div style={{positin:'relative' , width:'inherit'}}>
-{ languagesOpen && <Voices array={languagesArray} setLanguage={setLanguage} setLanguagesOpen={setLanguagesOpen}/>}	
-</div>
 
-<button onClick={getAllVoices}> getVoices</button>
+<p style={{fontSize:'12px', margin:'0'}}><span style={{fontWeight:'bold'}}> Ընտրված ձայնը: </span> {toggleOn?'Հիմնական ձայնը' : language} </p>
+ <div style={{display:'flex' , alignItems:'center' , marginLeft:'auto'}}>
+ <p style={{fontSize:'12px', fontWeight:'bold', margin:'0'}}>փոխել ձայնը</p> <Toggle setToggleOn={setToggleOn} toggleOn={toggleOn}/></div>
+<hr style={{width:'100%'}}/>
+
+
 <div style={{display:'flex' ,alignItems:'center', width:'inherit' , justifyContent:'space-between'}}>
 <h1 className='question'>{question}</h1>
 
 <div className='speech' onClick={onSpeechClick}>
-{language!='meSpeak default voice' &&<Speech  text={speechText} voice={language} />}
+{language!='meSpeak default voice' && !toggleOn &&<Speech  text={speechText} voice={language} />}
 <Speak  className='speechIcon'/>
 </div>
 </div>
-{ languagesArray.map(e=> {return (<div>{e.lang+':'+ e.voiceURI+':'+ e.name}</div>)}) }
 {answers.map((e,i)=>{return(<button  key={i} onClick={onAnswerClick } className={`answer answer${i}`}>{e}</button>)})}
 <button  onClick={  onNextClick } className='nextBtn'>{buttonText}</button>
    <script src=""></script>
